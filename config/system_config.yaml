@@ -1,0 +1,97 @@
+# TurtleBot3 Smart Automation - System Configuration
+# ===================================================
+
+system:
+  name: "TurtleBot3 Smart Automation"
+  version: "1.0.0"
+  ros_distro: "humble"
+  log_level: "INFO"
+  author: "Sarvar Akimov"
+  course: "Operating Systems - Inha University"
+
+robot:
+  model: "burger"  # burger, waffle, waffle_pi
+  namespace: "tb3"
+  use_sim: false
+  serial_port: "/dev/ttyUSB0"
+  baud_rate: 115200
+
+setup:
+  workspace_path: "~/tb3_ws"
+  auto_install: true
+  verify_installation: true
+  install_simulation: true
+  install_navigation: true
+  create_systemd_service: false
+
+health_monitor:
+  check_interval: 5.0  # seconds
+  battery_low_threshold: 20.0  # percent
+  battery_critical_threshold: 10.0  # percent
+  enable_alerts: true
+  save_history: true
+  max_history_size: 1000
+  cpu_warning_threshold: 90.0  # percent
+  memory_warning_threshold: 90.0  # percent
+  motor_temp_warning: 60.0  # celsius
+  motor_temp_critical: 70.0  # celsius
+
+navigation:
+  planner: "NavFn"  # NavFn, SmacPlanner
+  controller: "DWB"  # DWB, TEB, MPC
+  max_linear_speed: 0.22  # m/s
+  max_angular_speed: 2.84  # rad/s
+  min_linear_speed: 0.0
+  min_angular_speed: 0.0
+  use_behavior_tree: true
+  goal_tolerance:
+    xy: 0.1  # meters
+    yaw: 0.1  # radians
+  default_waypoints:
+    - [1.0, 0.0, 0.0]
+    - [1.0, 1.0, 1.57]
+    - [0.0, 1.0, 3.14]
+    - [0.0, 0.0, 0.0]
+
+vision:
+  model: "yolov8n.pt"  # Path to YOLOv8 model
+  confidence_threshold: 0.5
+  enable_tracking: true
+  publish_rate: 10.0  # Hz
+  camera_topic: "/camera/image_raw"
+  detection_classes:
+    - "person"
+    - "bottle"
+    - "cup"
+    - "laptop"
+    - "cell phone"
+    - "book"
+  interaction_modes:
+    follow_distance: 1.0  # meters
+    avoid_distance: 0.5  # meters
+    approach_distance: 0.3  # meters
+
+gesture:
+  camera_id: 0
+  min_detection_confidence: 0.7
+  min_tracking_confidence: 0.5
+  enable_feedback: true
+  enable_voice_feedback: false
+  base_linear_speed: 0.15  # m/s
+  base_angular_speed: 0.5  # rad/s
+  speed_multiplier_min: 0.3
+  speed_multiplier_max: 2.0
+  gesture_cooldown: 0.5  # seconds
+
+logging:
+  log_directory: "logs"
+  max_file_size: 10485760  # 10MB
+  backup_count: 5
+  json_logging: true
+  console_logging: true
+  file_logging: true
+
+ros2:
+  domain_id: 30
+  qos_reliability: "reliable"  # reliable, best_effort
+  qos_durability: "volatile"  # volatile, transient_local
