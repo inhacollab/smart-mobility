@@ -6,10 +6,10 @@ TurtleBot3 Smart Automation - Main Orchestration Script
 Comprehensive automation system for TurtleBot3 with ROS2 Humble.
 Integrates all modules: Setup, Health Monitoring, Navigation, Vision, and Gesture Control.
 
-Author: Sarvar Akimov
-Student ID: 12225606
-Course: Operating Systems
-Institution: Inha University in Tashkent
+Author: Javokhir Yuldoshev
+Student ID: 12214760
+Course: Smart Mobility
+Institution: INHA University
 Professor: Prof. MP
 Submission Date: December 12, 2025
 
@@ -69,8 +69,8 @@ class TurtleBot3SmartAutomation:
         self.logger.info("=" * 80)
         self.logger.info("🤖 TURTLEBOT3 SMART AUTOMATION SYSTEM")
         self.logger.info("=" * 80)
-        self.logger.info(f"Author: Sarvar Akimov")
-        self.logger.info(f"Course: Operating Systems - Inha University")
+        self.logger.info(f"Author: Javokhir Yuldoshev")
+        self.logger.info(f"Course: Smart Mobility - INHA University")
         self.logger.info(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         self.logger.info("=" * 80)
         

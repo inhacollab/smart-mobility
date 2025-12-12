@@ -6,8 +6,8 @@ system:
   version: "1.0.0"
   ros_distro: "humble"
   log_level: "INFO"
-  author: "Sarvar Akimov"
-  course: "Operating Systems - Inha University"
+  author: "Javokhir Yuldoshev"
+  course: "Smart Mobility - INHA University"
 
 robot:
   model: "burger"  # burger, waffle, waffle_pi

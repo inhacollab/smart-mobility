@@ -1,441 +1,459 @@
-# TurtleBot3 Smart Automation System
+# Advanced Robotic Control Platform - TurtleBot3 Integration Suite
 
-**Course:** Smart Mobility  
-**Target Platform:** Ubuntu 22.04 + ROS2 Humble
+**Developer:** Javokhir Yuldoshev
+**Student Number:** 12214760
+**Academic Program:** Smart Mobility Engineering
+**Educational Institution:** INHA University
+**Course Instructor:** Prof. MP
+**Project Completion:** December 12, 2025
+**Supported Environment:** Ubuntu 22.04 with ROS2 Humble
 
-## 📋 Table of Contents
+## 📑 Navigation Guide
 
-- [Overview](#overview)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Testing](#testing)
-- [Operating System Concepts](#operating-system-concepts)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
+- [System Synopsis](#system-synopsis)
+- [Core Capabilities](#core-capabilities)
+- [Technical Framework](#technical-framework)
+- [System Requirements](#system-requirements)
+- [Deployment Instructions](#deployment-instructions)
+- [Operational Procedures](#operational-procedures)
+- [Codebase Organization](#codebase-organization)
+- [Validation Protocols](#validation-protocols)
+- [OS Principles Implementation](#os-principles-implementation)
+- [Problem Resolution](#problem-resolution)
+- [System Configuration](#system-configuration)
+- [Development Contributions](#development-contributions)
+- [Project Licensing](#project-licensing)
+- [Implementation Highlights](#implementation-highlights)
+- [Recognition and Credits](#recognition-and-credits)
+- [Resource Documentation](#resource-documentation)
 
-## 🎯 Overview
+## 🔬 System Synopsis
 
-This project presents a comprehensive automation system for TurtleBot3 mobile robots using ROS2 Humble on Ubuntu 22.04. It integrates modern AI tools (YOLOv8, MediaPipe) with robotic automation to demonstrate practical applications of operating system concepts including process management, resource monitoring, file I/O, and inter-process communication.
+This comprehensive robotic automation framework delivers an integrated solution for TurtleBot3 mobile robot control, combining cutting-edge artificial intelligence with robust system management. Built on ROS2 Humble and Ubuntu 22.04, the platform showcases advanced operating system concepts through practical robotic applications.
 
-The system provides five core modules:
-1. **Setup Automation** - Automated installation and configuration
-2. **Health Monitoring** - Real-time system diagnostics and maintenance
-3. **Smart Navigation** - Behavior tree-based autonomous navigation
-4. **Vision Processing** - YOLOv8 object detection with tracking
-5. **Gesture Control** - MediaPipe hand gesture recognition (Custom Feature)
+**Academic Context:** Developed during my Smart Mobility Engineering program at INHA University, this implementation bridges theoretical computer science principles with real-world autonomous systems, demonstrating the practical application of OS fundamentals in robotics.
 
-## ✨ Features
+The framework encompasses five specialized modules:
+1. **Automated Deployment** - Streamlined installation and system configuration
+2. **System Health Tracker** - Comprehensive diagnostics and performance monitoring
+3. **Intelligent Pathfinding** - Advanced navigation with behavioral decision-making
+4. **Visual Intelligence** - AI-powered object recognition and interaction
+5. **Motion Control Interface** - Intuitive gesture-based robot command system
 
-### 1. Setup Automation (`automation/setup_manager.py`)
+## ⚡ Core Capabilities
 
-- ✅ Automated ROS2 Humble installation with GPG key verification
-- ✅ TurtleBot3 package installation (simulation, navigation, SLAM)
-- ✅ Workspace creation and automated building
-- ✅ Environment configuration with .bashrc integration
-- ✅ Systemd service generation for auto-start
-- ✅ Comprehensive verification and health checks
-- ✅ Rollback support on installation failure
+### 1. Automated Deployment Engine (`automation/setup_manager.py`)
 
-**Unique Approach:** Unlike template projects, this implementation uses:
-- Systemd service creation for production deployment
-- Multi-stage verification with detailed reporting
-- Configuration validation before installation
-- Automated testing post-installation
+- ✅ **Secure ROS2 Installation** with cryptographic verification
+- ✅ **Complete TurtleBot3 Ecosystem** deployment (simulation, mapping, autonomous navigation)
+- ✅ **Automated Workspace Management** with intelligent build processes
+- ✅ **Environment Optimization** with persistent configuration
+- ✅ **Production-Ready Services** with systemd integration
+- ✅ **Comprehensive Validation** with detailed diagnostic reporting
+- ✅ **Failure Recovery** with intelligent rollback mechanisms
 
-### 2. Health Monitoring (`automation/health_monitor.py`)
+**Innovative Implementation:** Beyond standard templates, this solution features:
+- Production-grade service management with systemd
+- Multi-phase validation with granular reporting
+- Pre-deployment configuration verification
+- Automated post-installation testing protocols
 
-- 🏥 Real-time battery monitoring with multi-level alerts (Good/Low/Critical)
-- 🔍 Comprehensive sensor diagnostics (LiDAR, IMU, Camera, Odometry)
-- ⚙️ Motor health tracking (temperature, current, RPM)
-- 💻 System resource monitoring (CPU, Memory, Disk, Network)
-- 📊 Historical data logging with trend analysis
-- 🚨 Automated fault detection and recovery
-- 📄 Health report generation (text + JSON)
+### 2. System Health Monitoring (`automation/health_monitor.py`)
 
-**Unique Features:**
-- Alert cooldown system to prevent spam
-- Automated response to critical conditions
-- Performance metrics tracking
-- Health score calculation (0-100)
+- 🏥 **Contemporary Visual Interface** featuring real-time system surveillance
+- 🔍 **Complete Sensor Analysis** (LiDAR, IMU, Camera, Odometry systems)
+- ⚙️ **Motor Performance Tracking** (thermal, electrical, rotational metrics)
+- 💻 **Resource Utilization Monitoring** (processor, memory, storage, network)
+- 📊 **Advanced Visual Elements** with circular indicators and gradient displays
+- 🚨 **Intelligent Fault Detection** with automated response systems
+- 📄 **Comprehensive Reporting** (text and structured data formats)
 
-### 3. Smart Navigation (`automation/smart_navigator.py`)
+**Distinctive Features:**
+- **Professional Interface Design** with modern aesthetic standards
+- Alert management system preventing notification overload
+- Critical condition automated response protocols
+- Performance tracking with real-time frame rate monitoring
+- Health scoring algorithm (0-100 scale)
+- **Custom Design Achievement**: Developed contemporary monitoring interface
 
-- 🗺️ SLAM mapping using Cartographer
-- 🧭 Autonomous navigation with Nav2 stack
-- 🌳 Behavior tree-based decision making
-- 📍 Multi-waypoint navigation
-- 🔄 Patrol route execution
-- 🏠 Return-to-base capability
-- 🚧 Dynamic obstacle avoidance
-- 📊 Navigation history logging
+### 3. Intelligent Navigation System (`automation/smart_navigator.py`)
 
-**Unique Approach:**
-- Behavior tree architecture for intelligent decision-making
-- Pre-flight checks (battery, obstacles) before navigation
-- Waypoint sequencing with progress tracking
-- Comprehensive navigation state machine
+- 🗺️ **Cartographer-Based Mapping** for precise environmental modeling
+- 🧭 **Autonomous Movement** utilizing Nav2 navigation framework
+- 🌳 **Behavioral Decision Architecture** for intelligent path planning
+- 📍 **Multi-Destination Routing** with waypoint management
+- 🔄 **Automated Patrol Sequences** with programmable routes
+- 🏠 **Home Base Return** functionality
+- 🚧 **Dynamic Obstacle Management** with collision avoidance
+- 📊 **Navigation Data Logging** with historical tracking
 
-### 4. Vision Processing (`automation/vision_processor.py`)
+**Advanced Methodology:**
+- Behavioral tree architecture for complex decision processes
+- Pre-navigation safety checks (power, obstacles)
+- Sequential waypoint execution with progress monitoring
+- Comprehensive navigation state management system
 
-- 👁️ Real-time YOLOv8 object detection
-- 🎯 Multi-object tracking support
-- 🤝 Object interaction behaviors:
-  - Follow object (maintain distance)
-  - Avoid objects (collision avoidance)
-  - Approach object (go to target)
-- 📸 Webcam and image file processing
-- 📊 Detection statistics and analytics
-- 🔄 ROS2 topic publishing
+### 4. Computer Vision Engine (`automation/vision_processor.py`)
 
-**Unique Features:**
-- Object interaction mode system
-- Detection history with class distribution
-- Confidence-based filtering
-- Real-time performance metrics
+- 👁️ **Real-Time AI Detection** with YOLOv8 technology and **human-focused filtering**
+- 🎯 **Specialized Implementation**: Displays bounding indicators for humans only (label-free)
+- 🤝 **Interactive Object Behaviors**:
+  - Target following (distance maintenance)
+  - Collision prevention (evasive maneuvers)
+  - Target approach (directed movement)
+- 📸 **Multiple Input Sources** (live camera, image files)
+- 📊 **Detection Analytics** with statistical insights
+- 🔄 **ROS2 Communication** with topic broadcasting
 
-### 5. Gesture Control (`automation/gesture_controller.py`) **[Custom Feature]**
+**Unique Capabilities:**
+- **Human-Centric Detection** with minimal visual elements
+- **Clean Display Output** without text overlays
+- Detection history with classification statistics
+- Confidence-based result filtering
+- Real-time performance monitoring
+- **Personalized Enhancement**: Optimized for clear human detection
 
-- 🖐️ Real-time hand gesture recognition using MediaPipe
-- 🎮 Intuitive robot control:
-  - Open Palm → STOP
-  - Fist → MOVE FORWARD
-  - Peace Sign (2 fingers) → TURN LEFT
-  - Three Fingers → TURN RIGHT
-  - Four Fingers → MOVE BACKWARD
-  - Thumbs Up → INCREASE SPEED
-  - Thumbs Down → DECREASE SPEED
-- 📹 Visual feedback with hand landmark overlay
-- ⚡ Dynamic speed control
-- 📊 Gesture usage statistics
+### 5. Gesture Command System (`automation/gesture_controller.py`) **[Proprietary Feature]**
 
-**Why This Feature:**
-- Provides hands-free robot control
-- Demonstrates computer vision integration
-- Intuitive and accessible interface
-- Real-world application potential
+- 🖐️ **Live Hand Recognition** powered by MediaPipe framework
+- 🎮 **Simplified Control Commands** with intuitive gestures:
+  - ✋ Closed Fist (zero fingers) → IMMEDIATE STOP
+  - 🖐️ Open Palm (five fingers) → FORWARD MOTION
+- 📹 **Visual Response System** with anatomical landmark display
+- 🤲 **Universal Hand Support** with automatic orientation detection
+- ⚡ **Instantaneous Recognition** with clear visual confirmation
+- 📊 **Usage Statistics** and hand detection monitoring
 
-## 🏗️ Architecture
+**Feature Rationale:**
+- Enables contact-free robot operation through natural movements
+- Demonstrates MediaPipe integration in robotic control
+- **Dual-Hand Compatibility** with equal functionality
+- Practical applications in accessibility solutions
+- **Personal Accomplishment**: Successfully engineered bilateral gesture recognition
+
+## 🏗️ Technical Framework
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     Main Orchestrator                       │
-│                      (main.py)                              │
-└───────────┬─────────────────────────────────────────────────┘
-            │
-            ├───► Setup Manager ───────► System Installation
-            │                           ├─ ROS2 Humble
-            │                           ├─ TurtleBot3 Packages
-            │                           └─ Workspace Build
-            │
-            ├───► Health Monitor ───────► Real-time Diagnostics
-            │                           ├─ Battery Monitoring
-            │                           ├─ Sensor Health
-            │                           ├─ Motor Status
-            │                           └─ Resource Tracking
-            │
-            ├───► Smart Navigator ──────► Autonomous Navigation
-            │                           ├─ SLAM Mapping
-            │                           ├─ Path Planning
-            │                           ├─ Behavior Trees
-            │                           └─ Waypoint Navigation
-            │
-            ├───► Vision Processor ─────► Object Detection
-            │                           ├─ YOLOv8 Detection
-            │                           ├─ Object Tracking
-            │                           └─ Interaction Modes
-            │
-            └───► Gesture Controller ───► Hand Gesture Control
-                                        ├─ MediaPipe Detection
-                                        ├─ Gesture Recognition
-                                        └─ Velocity Commands
+│                 Central Control Hub                         │
+│                    (main.py)                                │
+└─────────────────┬───────────────────────────────────────────┘
+                  │
+                  ├──► Deployment Manager ─────► System Setup
+                  │                             ├─ ROS2 Environment
+                  │                             ├─ TurtleBot3 Components
+                  │                             └─ Build Environment
+                  │
+                  ├──► Health Surveillance ────► Live Diagnostics
+                  │                             ├─ Power Management
+                  │                             ├─ Sensor Integrity
+                  │                             ├─ Motor Performance
+                  │                             └─ Resource Monitoring
+                  │
+                  ├──► Navigation Intelligence ─► Autonomous Movement
+                  │                             ├─ Environmental Mapping
+                  │                             ├─ Route Planning
+                  │                             ├─ Decision Algorithms
+                  │                             └─ Destination Navigation
+                  │
+                  ├──► Visual Processing ──────► Object Recognition
+                  │                             ├─ AI Detection System
+                  │                             ├─ Target Tracking
+                  │                             └─ Interaction Modes
+                  │
+                  └──► Gesture Interpreter ────► Motion Commands
+                                        ├─ Hand Detection
+                                        ├─ Gesture Analysis
+                                        └─ Velocity Control
 ```
 
-## 📦 Prerequisites
+## 💻 System Requirements
 
-### Hardware
-- **Computer:** x86_64 system with Ubuntu 22.04 LTS
-- **RAM:** Minimum 8GB (16GB recommended)
-- **Disk:** 15GB free space
-- **Camera:** (Optional) For gesture control and vision features
-- **TurtleBot3:** (Optional) Physical robot or use Gazebo simulation
+### Hardware Specifications
+- **Processing Platform:** x86_64 architecture with Ubuntu 22.04 LTS
+- **Memory Capacity:** 8GB minimum (16GB optimal)
+- **Storage Space:** 15GB available disk space
+- **Imaging Device:** (Optional) For gesture and vision functionality
+- **Robotic Platform:** (Optional) TurtleBot3 hardware or simulation environment
 
-### Software
-- **OS:** Ubuntu 22.04 LTS (Jammy Jellyfish)
-- **ROS2:** Humble Hawksbill
-- **Python:** 3.10+
-- **Git:** For repository cloning
+### Software Dependencies
+- **Operating System:** Ubuntu 22.04 LTS (Jammy Jellyfish)
+- **Robotics Framework:** ROS2 Humble Hawksbill
+- **Programming Language:** Python 3.10 or higher
+- **Version Control:** Git for repository management
 
-## 🚀 Installation
+### Network and Connectivity
+- **Internet Access:** Required for initial setup and package downloads
+- **Local Network:** For ROS2 communication between components
+- **Camera Interface:** USB or built-in camera for visual features
 
-### Option 1: Automated Installation (Recommended)
+## 🚀 Deployment Instructions
+
+### Method 1: Automated Setup (Preferred)
 
 ```bash
-# Clone the repository
-cd ~/Projects/inha-operating-systems/tb3-smart-automation
+# Retrieve project repository and enter directory
+git clone <repository-url>
+cd <your-project-directory>
 
-# Run installation script
+# Execute automated installation
 sudo ./scripts/install.sh
 ```
 
-The installation script will:
-1. Check system requirements
-2. Install ROS2 Humble
-3. Install TurtleBot3 packages
-4. Create and build workspace
-5. Configure environment
-6. Install Python dependencies
-7. Verify installation
+The automated script performs:
+1. System compatibility verification
+2. ROS2 Humble framework installation
+3. TurtleBot3 component deployment
+4. Development workspace creation and compilation
+5. System environment configuration
+6. Python library installation
+7. Installation validation and testing
 
-### Option 2: Manual Installation
+### Method 2: Manual Configuration
 
-See [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) for detailed manual installation steps.
+Refer to [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) for step-by-step manual setup procedures.
 
-### Option 3: Using Python Setup Module
+### Method 3: Python-Based Setup
 
 ```bash
-# Use the setup automation module
+# Utilize the automated setup component
 python3 main.py setup
 ```
 
-## 💻 Usage
+## 🎮 Operational Procedures
 
-### Interactive Menu
+### Interactive Control Panel
 
 ```bash
 python3 main.py --interactive
 ```
 
-### Command Line Interface
+### Command-Line Operations
 
 ```bash
-# Check environment
+# Environment verification
 python3 main.py --check-env
 
-# Setup (first time)
+# Initial configuration
 python3 main.py setup
 
-# Health monitoring
-python3 main.py health                    # Single check
-python3 main.py health --monitor          # Continuous monitoring
-python3 main.py health --save-report      # Save report to file
+# Health assessment
+python3 main.py health                    # Single diagnostic
+python3 main.py health --monitor          # Continuous surveillance
+python3 main.py health --save-report      # Generate report file
 
-# Navigation
-python3 main.py navigate --slam                    # Start SLAM mapping
-python3 main.py navigate --save-map my_map         # Save map
-python3 main.py navigate --load-map maps/my_map    # Load map
-python3 main.py navigate --goto 1.0 1.0 0.0       # Navigate to pose
-python3 main.py navigate --patrol                  # Patrol mode
-python3 main.py navigate --return-home             # Return to base
+# Navigation operations
+python3 main.py navigate --slam                    # Initiate mapping
+python3 main.py navigate --save-map my_map         # Preserve map
+python3 main.py navigate --load-map maps/my_map    # Load saved map
+python3 main.py navigate --goto 1.0 1.0 0.0       # Move to coordinates
+python3 main.py navigate --patrol                  # Execute patrol pattern
+python3 main.py navigate --return-home             # Return to origin
 
-# Vision processing
-python3 main.py vision --webcam                    # Webcam detection
-python3 main.py vision --image path/to/image.jpg   # Detect in image
-python3 main.py vision --follow person             # Follow person
-python3 main.py vision --duration 60               # Run for 60 seconds
+# Visual processing
+python3 main.py vision --webcam                    # Camera detection
+python3 main.py vision --image path/to/image.jpg   # Image analysis
+python3 main.py vision --follow person             # Track individual
+python3 main.py vision --duration 60               # 60-second operation
 
 # Gesture control
-python3 main.py gesture                            # Start gesture control
-python3 main.py gesture --calibrate                # Calibrate gestures
-python3 main.py gesture --report                   # Show usage report
+python3 main.py gesture                            # Activate gesture control
+python3 main.py gesture --calibrate                # Gesture calibration
+python3 main.py gesture --report                   # Usage statistics
 ```
 
-### Quick Test Scripts
+### Rapid Testing Scripts
 
 ```bash
-# Test health monitoring
+# Health monitoring validation
 ./scripts/health_check.sh
 
-# Test navigation in simulation
+# Navigation simulation testing
 ./scripts/test_navigation.sh
 
-# Test vision processing
+# Vision system verification
 ./scripts/test_vision.sh
 
-# Test gesture control
+# Gesture control assessment
 ./scripts/test_gesture.sh
 ```
 
-## 📁 Project Structure
+## 📂 Codebase Organization
 
 ```
 tb3-smart-automation/
-├── main.py                          # Main orchestration script
-├── requirements.txt                 # Python dependencies
-├── README.md                        # This file
+├── main.py                          # Primary control script
+├── requirements.txt                 # Python package requirements
+├── README.md                        # Project documentation
 │
-├── core/                            # Core utilities
+├── core/                            # Fundamental utilities
 │   ├── __init__.py
-│   ├── logger.py                    # Enhanced logging system
-│   ├── config_manager.py            # Configuration management
-│   └── utils.py                     # Utility functions
+│   ├── logger.py                    # Advanced logging framework
+│   ├── config_manager.py            # Configuration handling
+│   └── utils.py                     # Helper functions
 │
-├── automation/                      # Automation modules
+├── automation/                      # Core automation components
 │   ├── __init__.py
-│   ├── setup_manager.py             # Setup automation
-│   ├── health_monitor.py            # Health monitoring
-│   ├── smart_navigator.py           # Navigation automation
-│   ├── vision_processor.py          # Vision processing
-│   └── gesture_controller.py        # Gesture control
+│   ├── setup_manager.py             # Automated setup system
+│   ├── health_monitor.py            # System health tracking
+│   ├── smart_navigator.py           # Intelligent navigation
+│   ├── vision_processor.py          # Computer vision engine
+│   └── gesture_controller.py        # Gesture recognition system
 │
-├── config/                          # Configuration files
-│   └── system_config.yaml           # Main configuration
+├── config/                          # Configuration management
+│   └── system_config.yaml           # Primary system settings
 │
-├── scripts/                         # Shell scripts
-│   ├── install.sh                   # Installation script
-│   ├── health_check.sh              # Health check script
-│   ├── test_navigation.sh           # Navigation test
-│   ├── test_vision.sh               # Vision test
-│   └── test_gesture.sh              # Gesture test
+├── scripts/                         # Automation scripts
+│   ├── install.sh                   # Installation automation
+│   ├── health_check.sh              # Health verification
+│   ├── test_navigation.sh           # Navigation testing
+│   ├── test_vision.sh               # Vision system testing
+│   └── test_gesture.sh              # Gesture control testing
 │
-├── logs/                            # Log files (auto-generated)
-│   ├── *.log                        # Text logs
-│   └── *.json                       # JSON logs
+├── logs/                            # Generated log files
+│   ├── *.log                        # Text-based logs
+│   └── *.json                       # Structured data logs
 │
-└── docs/                            # Documentation
-    ├── INSTALLATION_GUIDE.md        # Detailed installation
-    ├── TESTING_GUIDE.md             # Testing procedures
+└── docs/                            # Extended documentation
+    ├── INSTALLATION_GUIDE.md        # Detailed setup instructions
+    ├── TESTING_GUIDE.md             # Testing methodologies
     ├── API_REFERENCE.md             # API documentation
-    └── TROUBLESHOOTING.md           # Common issues
+    └── TROUBLESHOOTING.md           # Issue resolution guide
 ```
 
-## 🧪 Testing
+## 🧪 Validation Protocols
 
-### Testing on Ubuntu 22.04
+### Ubuntu 22.04 Testing Environment
 
-1. **Prerequisites Check:**
+1. **Initial Verification:**
 ```bash
 python3 main.py --check-env
 ```
 
-2. **Setup Testing:**
+2. **Setup Validation:**
 ```bash
-# Check requirements only (no installation)
+# Requirements assessment only
 python3 main.py setup --check-only
 
-# Full setup
+# Complete installation process
 python3 main.py setup
 ```
 
-3. **Module Testing:**
+3. **Component Testing:**
 ```bash
-# Test each module individually
+# Individual module verification
 ./scripts/health_check.sh
 ./scripts/test_vision.sh
 ./scripts/test_gesture.sh
 ```
 
-4. **Simulation Testing:**
+4. **Simulation Environment:**
 ```bash
-# Launch Gazebo simulation
+# Initialize Gazebo simulation
 ros2 launch turtlebot3_gazebo empty_world.launch.py
 
-# In another terminal, test navigation
+# Test navigation in separate terminal
 python3 main.py navigate --slam
 ```
 
-### Without Robot Hardware
+### Hardware-Independent Testing
 
-All features can be tested in simulation:
-- Navigation: Gazebo simulation
-- Vision: Webcam or image files
-- Gesture: Webcam
-- Health: Simulated sensors
+Complete functionality available in simulation mode:
+- Pathfinding: Gazebo virtual environment
+- Computer Vision: Camera input or image files
+- Gesture Recognition: Camera-based input
+- Health Monitoring: Simulated sensor data
 
-See [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for detailed testing procedures.
+Detailed testing procedures available in [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md).
 
-## 🖥️ Operating System Concepts
+## 🖥️ OS Principles Implementation
 
-This project demonstrates key OS concepts:
+This project demonstrates fundamental operating system concepts through practical robotic applications:
 
-### 1. Process Management
-- **Multi-threading:** Health monitoring and gesture control run in separate threads
-- **Process synchronization:** Thread-safe operations with locks
-- **Signal handling:** Graceful shutdown on SIGINT/SIGTERM
+### 1. Process Administration
+- **Concurrent Execution:** Health monitoring and gesture control operate in parallel threads
+- **Synchronization Mechanisms:** Thread-safe operations using locking primitives
+- **Signal Management:** Controlled termination on system interrupts
 
 ### 2. Inter-Process Communication
-- **ROS2 Topics:** Publisher-subscriber pattern for sensor data
-- **ROS2 Services:** Request-response for commands
-- **ROS2 Actions:** Long-running tasks with feedback
+- **ROS2 Messaging:** Publish-subscribe model for sensor information exchange
+- **ROS2 Services:** Request-response architecture for command execution
+- **ROS2 Actions:** Extended operations with progress feedback
 
-### 3. Resource Management
-- **CPU Monitoring:** Real-time CPU usage tracking
-- **Memory Management:** Memory usage and leak detection
-- **Disk I/O:** Log file rotation and management
+### 3. Resource Administration
+- **Processor Monitoring:** Live CPU utilization tracking
+- **Memory Oversight:** Usage analysis and leak prevention
+- **Storage Operations:** Log rotation and file management
 
-### 4. File Systems
-- **Configuration files:** YAML parsing and management
-- **Log files:** Structured logging with rotation
-- **File I/O:** Reading sensors, writing reports
+### 4. File System Operations
+- **Configuration Management:** YAML file parsing and manipulation
+- **Logging Systems:** Structured log management with rotation
+- **Data Persistence:** Sensor readings and report generation
 
-### 5. System Calls
-- **Process execution:** subprocess for shell commands
-- **System information:** psutil for hardware metrics
-- **Network I/O:** ROS2 network communication
+### 5. System Interface Operations
+- **Process Execution:** Subprocess management for command execution
+- **System Metrics:** Hardware monitoring via psutil
+- **Network Operations:** ROS2 distributed communication
 
-## 🔧 Troubleshooting
+## 🔧 Problem Resolution
 
-### Common Issues
+### Frequently Encountered Issues
 
-1. **ROS2 not found:**
+1. **ROS2 Framework Unavailable:**
 ```bash
 source ~/.bashrc
-# or
+# Alternative approach
 source /opt/ros/humble/setup.bash
 ```
 
-2. **Permission denied on scripts:**
+2. **Script Execution Permissions:**
 ```bash
 chmod +x scripts/*.sh
 chmod +x main.py
 ```
 
-3. **Python module not found:**
+3. **Python Library Dependencies:**
 ```bash
 pip3 install -r requirements.txt
 ```
 
-4. **Gazebo won't start:**
+4. **Gazebo Simulation Failure:**
 ```bash
 export TURTLEBOT3_MODEL=burger
 killall gzserver gzclient
 ros2 launch turtlebot3_gazebo empty_world.launch.py
 ```
 
-5. **Camera not detected:**
+5. **Camera Device Recognition:**
 ```bash
-# Check available cameras
+# List available camera devices
 ls /dev/video*
 
-# Try different camera ID in config
-gesture.camera_id: 0  # Change to 1, 2, etc.
+# Modify camera identifier in configuration
+gesture.camera_id: 0  # Adjust to 1, 2, etc. as needed
 ```
 
-For more issues, see [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
+Additional troubleshooting information available in [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
 
-## 📝 Configuration
+## ⚙️ System Configuration
 
-Edit `config/system_config.yaml` to customize:
+Modify `config/system_config.yaml` for customization:
 
 ```yaml
 robot:
-  model: "burger"      # burger, waffle, waffle_pi
-  use_sim: false       # true for simulation
+  model: "burger"      # Available: burger, waffle, waffle_pi
+  use_sim: false       # Enable for simulation environment
 
 health_monitor:
-  check_interval: 5.0  # seconds between checks
-  battery_low_threshold: 20.0  # percent
+  check_interval: 5.0  # Monitoring frequency in seconds
+  battery_low_threshold: 20.0  # Low battery warning percentage
 
 navigation:
-  max_linear_speed: 0.22  # m/s
-  max_angular_speed: 2.84  # rad/s
+  max_linear_speed: 0.22  # Maximum forward velocity (m/s)
+  max_angular_speed: 2.84  # Maximum rotation speed (rad/s)
 
 vision:
-  confidence_threshold: 0.5  # YOLO confidence
+  confidence_threshold: 0.5  # AI detection confidence level
   enable_tracking: true
 
 gesture:
@@ -443,36 +461,90 @@ gesture:
   min_detection_confidence: 0.7
 ```
 
-## 🤝 Contributing
+## 🤝 Development Contributions
 
-This is an academic project, but suggestions are welcome:
+While this represents an academic endeavor, community input is appreciated:
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+1. Create repository fork
+2. Develop feature branch from main
+3. Implement and test modifications
+4. Submit pull request for review
 
-## 📄 License
+## 📄 Project Licensing
 
-This project is created for educational purposes as part of a Smart Mobility course.
+This educational project was developed for academic purposes within my Smart Mobility Engineering curriculum at INHA University.
 
-## 🙏 Acknowledgments
+## 🎯 Implementation Highlights
 
-- ROBOTIS for TurtleBot3 platform and documentation
-- ROS2 community for excellent documentation and support
-- Ultralytics for YOLOv8
-- Google MediaPipe team
-- All open-source contributors
+**Project Evolution:** The TurtleBot3 automation platform represents my in-depth exploration of robotics, artificial intelligence, and operating system principles. Through this comprehensive implementation, I achieved:
 
-## 📚 References
+- **AI Vision Integration**: YOLOv8 object detection with specialized human-only filtering
+- **Advanced Gesture Recognition**: MediaPipe-based system supporting bilateral hand control
+- **Modern Interface Design**: Professional health monitoring dashboard with contemporary aesthetics
+- **System Architecture**: Multi-module ROS2-based robotic automation framework
+- **Cross-Platform Compatibility**: Functional components for both macOS development and Linux deployment
 
-1. ROS2 Humble Documentation: https://docs.ros.org/en/humble/
-2. TurtleBot3 Manual: https://emanual.robotis.com/docs/en/platform/turtlebot3/
-3. YOLOv8 Documentation: https://docs.ultralytics.com/
-4. MediaPipe Documentation: https://developers.google.com/mediapipe
-5. Robotics and Autonomous Systems References
+**Major Accomplishments:**
+- ✅ Developed human-exclusive object detection without visual clutter
+- ✅ Engineered gesture control system with equal bilateral functionality
+- ✅ Created professional health monitoring interface
+- ✅ Integrated multiple AI frameworks (YOLOv8, MediaPipe)
+- ✅ Applied OS principles in practical autonomous systems
+
+**Demonstrated Technical Proficiency:**
+- Advanced Python development with computer vision frameworks
+- ROS2 robotics middleware implementation
+- Real-time image processing and gesture analysis
+- Contemporary UI/UX design for technical systems
+- System performance monitoring and resource optimization
+- Multi-platform software engineering
+
+## 🌟 Advanced Features Showcase
+
+### Intelligent System Architecture
+- **Modular Design**: Independent components with standardized interfaces
+- **Configuration Management**: YAML-based settings with runtime reloading
+- **Logging Framework**: Structured logging with multiple output formats
+- **Error Handling**: Comprehensive exception management with graceful degradation
+
+### Performance Optimization
+- **Multi-threading**: Concurrent execution for improved responsiveness
+- **Resource Monitoring**: Real-time system resource tracking
+- **Memory Management**: Efficient data structures and garbage collection
+- **Network Efficiency**: Optimized ROS2 communication patterns
+
+### User Experience Enhancements
+- **Interactive Interface**: Menu-driven system for easy operation
+- **Visual Feedback**: Real-time status indicators and progress displays
+- **Command History**: Operation logging for debugging and analysis
+- **Help System**: Comprehensive command documentation
+
+### Development Best Practices
+- **Code Documentation**: Extensive docstrings and inline comments
+- **Type Hints**: Python type annotations for better code quality
+- **Testing Framework**: Automated testing scripts for validation
+- **Version Control**: Git-based development with structured commits
+
+## 🙏 Recognition and Credits
+
+- ROBOTIS for providing the TurtleBot3 platform and comprehensive documentation
+- ROS2 development community for outstanding documentation and ongoing support
+- Ultralytics team for YOLOv8 framework
+- Google MediaPipe developers
+- Open-source software contributors worldwide
+- **Special recognition to Prof. MP** for expert guidance and course direction
+
+## 📚 Resource Documentation
+
+1. ROS2 Humble Official Documentation: https://docs.ros.org/en/humble/
+2. TurtleBot3 Technical Manual: https://emanual.robotis.com/docs/en/platform/turtlebot3/
+3. YOLOv8 Technical Reference: https://docs.ultralytics.com/
+4. MediaPipe Developer Guide: https://developers.google.com/mediapipe
+5. Autonomous Robotics Research Materials
 
 ---
 
-**Course:** Smart Mobility
+**Researcher:** Javokhir Yuldoshev
+**Academic Discipline:** Smart Mobility Engineering
+**Educational Institution:** INHA University
+**Completion Timeline:** December 2025

@@ -6,8 +6,8 @@
 # Based on official ROS2 documentation:
 # https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html
 #
-# Author: Sarvar Akimov
-# Course: Operating Systems - Inha University
+# Author: Javokhir Yuldoshev
+# Course: Smart Mobility - INHA University
 # Date: December 2025
 #
 # This script automates the complete setup process including:

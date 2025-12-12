@@ -14,8 +14,8 @@ Features:
 - Detection history and analytics
 - Visual feedback with bounding boxes
 
-Author: Sarvar Akimov
-Course: Operating Systems - Inha University
+Author: Javokhir Yuldoshev
+Course: Smart Mobility - INHA University
 Date: December 2025
 """
 

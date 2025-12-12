@@ -4,8 +4,6 @@
 # Tests all components to verify they work
 #############################################################################
 
-cd ~/Projects/inha-operating-systems/tb3-smart-automation
-
 echo "════════════════════════════════════════════════════════════════════"
 echo "   TurtleBot3 Smart Automation - Quick Demo Test"
 echo "════════════════════════════════════════════════════════════════════"

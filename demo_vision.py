@@ -39,11 +39,24 @@ while cap.isOpened():
     # Run YOLOv8 detection
     results = model(frame, verbose=False)
     
-    # Draw detections
-    annotated_frame = results[0].plot()
+    # Filter and draw only person detections
+    annotated_frame = frame.copy()  # Start with original frame
+    person_count = 0
     
-    # Count objects
-    num_objects = len(results[0].boxes)
+    for box in results[0].boxes:
+        class_id = int(box.cls.item())
+        class_name = results[0].names[class_id]
+        confidence = float(box.conf.item())
+        
+        # Only process persons with sufficient confidence
+        if class_name == 'person' and confidence >= 0.5:
+            x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+            # Draw bounding box without label (green, thickness 2)
+            cv2.rectangle(annotated_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            person_count += 1
+    
+    # Count persons only
+    num_objects = person_count
     
     # Calculate FPS
     fps_counter += 1
@@ -57,7 +70,7 @@ while cap.isOpened():
     cv2.putText(annotated_frame, "TurtleBot3 Vision System", 
                (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 
                1, (0, 255, 255), 2)
-    cv2.putText(annotated_frame, f"Objects: {num_objects} | FPS: {fps}", 
+    cv2.putText(annotated_frame, f"Persons: {num_objects} | FPS: {fps}", 
                (20, 65), cv2.FONT_HERSHEY_SIMPLEX, 
                0.7, (0, 255, 0), 2)
     

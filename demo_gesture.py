@@ -17,55 +17,56 @@ hands = mp_hands.Hands(
     min_tracking_confidence=0.5
 )
 
-# Gesture recognition
-def recognize_gesture(hand_landmarks):
-    """Recognize basic hand gestures"""
+# Gesture recognition - Simplified for STOP and FORWARD commands
+def recognize_gesture(hand_landmarks, handedness):
+    """Recognize STOP and FORWARD hand gestures for both left and right hands"""
     landmarks = hand_landmarks.landmark
-    
+
     # Get finger tip and base positions
     thumb_tip = landmarks[4]
     index_tip = landmarks[8]
     middle_tip = landmarks[12]
     ring_tip = landmarks[16]
     pinky_tip = landmarks[20]
-    
+
     wrist = landmarks[0]
-    
+
     # Count extended fingers
     fingers_up = 0
-    
-    # Thumb (check if tip is to the right of base)
-    if thumb_tip.x > landmarks[3].x:
-        fingers_up += 1
-    
-    # Other fingers (check if tip is above base)
+
+    # Thumb detection - different logic for left vs right hand
+    if handedness == "Left":
+        # For left hand, thumb extends to the right
+        if thumb_tip.x > landmarks[3].x:
+            fingers_up += 1
+    else:  # Right hand
+        # For right hand, thumb extends to the left
+        if thumb_tip.x < landmarks[3].x:
+            fingers_up += 1
+
+    # Other fingers (check if tip is above base) - same for both hands
     finger_tips = [index_tip, middle_tip, ring_tip, pinky_tip]
     finger_bases = [landmarks[6], landmarks[10], landmarks[14], landmarks[18]]
-    
+
     for tip, base in zip(finger_tips, finger_bases):
         if tip.y < base.y:
             fingers_up += 1
-    
-    # Recognize gestures
+
+    # Recognize only STOP and FORWARD commands
     if fingers_up == 0:
-        return "STOP ✋", (0, 0, 255)  # Red
+        return "STOP", (0, 0, 255), "square"  # Red for STOP
     elif fingers_up == 5:
-        return "FORWARD 👋", (0, 255, 0)  # Green
-    elif fingers_up == 1:
-        return "SLOW ☝️", (255, 255, 0)  # Yellow
-    elif fingers_up == 2:
-        return "TURN ✌️", (255, 165, 0)  # Orange
+        return "FORWARD", (0, 255, 0), "arrow"  # Green for FORWARD
     else:
-        return f"{fingers_up} fingers", (255, 255, 255)  # White
+        return "UNKNOWN", (128, 128, 128), "question"  # Gray for unrecognized
 
 print("="*60)
 print("  🤖 TurtleBot3 Gesture Control Demo")
 print("="*60)
-print("\nGesture Commands:")
-print("  ✋ Fist (0 fingers)    → STOP")
-print("  👋 Open hand (5)       → FORWARD")
-print("  ☝️  One finger (1)      → SLOW")
-print("  ✌️  Two fingers (2)     → TURN")
+print("\nGesture Commands (Works with both LEFT & RIGHT hands):")
+print("  ✋ CLOSED FIST (0 fingers)  → STOP")
+print("  🖐️  OPEN HAND (5 fingers)   → FORWARD")
+print("\nBoth hands are supported - gestures work the same way!")
 print("\nPress 'q' to quit")
 print("="*60)
 
@@ -93,27 +94,48 @@ while cap.isOpened():
     
     # Draw hand landmarks and recognize gestures
     if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
+        for idx, hand_landmarks in enumerate(results.multi_hand_landmarks):
+            # Get handedness (Left or Right)
+            hand_label = results.multi_handedness[idx].classification[0].label
+
             # Draw hand skeleton
             mp_drawing.draw_landmarks(
-                frame, 
-                hand_landmarks, 
+                frame,
+                hand_landmarks,
                 mp_hands.HAND_CONNECTIONS,
                 mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=4),
                 mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=2)
             )
-            
-            # Recognize gesture
-            gesture, color = recognize_gesture(hand_landmarks)
-            
-            # Display gesture text
-            cv2.putText(frame, f"Gesture: {gesture}", 
-                       (50, 100), cv2.FONT_HERSHEY_DUPLEX, 
-                       1.5, color, 3)
+
+            # Recognize gesture with handedness
+            gesture, color, icon = recognize_gesture(hand_landmarks, hand_label)
+
+            # Display command with visual feedback
+            if gesture == "STOP":
+                command_text = f"🚫 STOP - {hand_label} hand detected"
+                bg_color = (0, 0, 100)  # Dark red background
+            elif gesture == "FORWARD":
+                command_text = f"▶️ FORWARD - {hand_label} hand detected"
+                bg_color = (0, 100, 0)  # Dark green background
+            else:
+                command_text = f"❓ Unknown gesture - {hand_label} hand"
+                bg_color = (50, 50, 50)  # Gray background
+
+            # Draw command background
+            cv2.rectangle(frame, (40, 70), (w-40, 130), bg_color, -1)
+            cv2.rectangle(frame, (40, 70), (w-40, 130), color, 3)
+
+            # Display command
+            cv2.putText(frame, command_text,
+                       (60, 105), cv2.FONT_HERSHEY_DUPLEX,
+                       1.2, (255, 255, 255), 3)
     else:
-        cv2.putText(frame, "No hand detected", 
-                   (50, 100), cv2.FONT_HERSHEY_DUPLEX, 
-                   1.5, (128, 128, 128), 3)
+        # No hand detected - show waiting message
+        cv2.rectangle(frame, (40, 70), (w-40, 130), (50, 50, 70), -1)
+        cv2.rectangle(frame, (40, 70), (w-40, 130), (100, 100, 150), 3)
+        cv2.putText(frame, "👋 Show your LEFT or RIGHT hand - Make a fist to STOP or open hand to go FORWARD",
+                   (60, 105), cv2.FONT_HERSHEY_DUPLEX,
+                   1.0, (255, 255, 255), 2)
     
     # Calculate FPS
     fps_counter += 1
@@ -124,11 +146,11 @@ while cap.isOpened():
     
     # Draw info overlay
     cv2.rectangle(frame, (0, 0), (w, 60), (0, 0, 0), -1)
-    cv2.putText(frame, "TurtleBot3 Gesture Control", 
-               (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 
+    cv2.putText(frame, "TurtleBot3 Gesture Control - STOP & FORWARD Commands",
+               (20, 35), cv2.FONT_HERSHEY_SIMPLEX,
                1, (0, 255, 255), 2)
-    cv2.putText(frame, f"FPS: {fps}", 
-               (w - 150, 35), cv2.FONT_HERSHEY_SIMPLEX, 
+    cv2.putText(frame, f"FPS: {fps}",
+               (w - 150, 35), cv2.FONT_HERSHEY_SIMPLEX,
                0.8, (0, 255, 0), 2)
     
     # Show instructions
