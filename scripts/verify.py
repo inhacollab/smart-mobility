@@ -19,9 +19,9 @@ results = []
 # Test core modules
 print("Testing core modules...")
 try:
-    from core.logger import setup_logger
-    from core.config_manager import ConfigManager
-    from core.utils import get_system_info
+    from core.logger import initialize_event_recorder
+    from core.config_manager import ConfigurationHandler
+    from core.utils import collect_environment_details
     print("  ✅ Core modules OK")
     results.append(("Core", True))
 except Exception as e:
@@ -32,11 +32,11 @@ except Exception as e:
 print("\nTesting automation modules...")
 
 modules = [
-    ("Setup Manager", "automation.setup_manager", "SetupManager"),
-    ("Health Monitor", "automation.health_monitor", "HealthMonitor"),
-    ("Smart Navigator", "automation.smart_navigator", "SmartNavigator"),
-    ("Vision Processor", "automation.vision_processor", "VisionProcessor"),
-    ("Gesture Controller", "automation.gesture_controller", "GestureController"),
+    ("Setup Manager", "automation.setup_manager", "InstallationOrchestrator"),
+    ("Health Monitor", "automation.health_monitor", "SystemHealthTracker"),
+    ("Smart Navigator", "automation.smart_navigator", "AutonomousPathfinder"),
+    ("Vision Processor", "automation.vision_processor", "ObjectRecognitionEngine"),
+    ("Gesture Controller", "automation.gesture_controller", "HandMotionInterpreter"),
 ]
 
 for name, module_path, class_name in modules:

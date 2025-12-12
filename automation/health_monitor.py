@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Health Monitor - Automated System Maintenance and Diagnostics
-=============================================================
+System Health Tracker - Automated System Maintenance and Diagnostics
+===================================================================
 
-Advanced health monitoring system with real-time diagnostics, historical tracking,
+Advanced system health tracking with real-time diagnostics, historical tracking,
 automated alerts, and fault recovery mechanisms.
 
 Features:
@@ -13,7 +13,7 @@ Features:
 - System resource tracking (CPU, Memory, Network)
 - Historical data logging with trend analysis
 - Automated fault detection and recovery
-- Health report generation
+- Diagnostic summary generation
 
 Author: Javokhir Yuldoshev
 Course: Smart Mobility - INHA University
@@ -30,12 +30,12 @@ import threading
 import time
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from core.utils import run_command, format_timestamp
-from core.config_manager import ConfigManager
+from core.utils import execute_system_call, render_datetime_string
+from core.config_manager import ConfigurationHandler
 
 
-class HealthMetrics:
-    """Container for health metrics"""
+class SystemDiagnostics:
+    """Container for system diagnostics"""
     
     def __init__(self):
         self.timestamp = datetime.now()
@@ -67,7 +67,7 @@ class HealthMetrics:
         self.alerts = []
     
     def to_dict(self) -> Dict:
-        """Convert metrics to dictionary"""
+        """Convert diagnostics to dictionary"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'battery': {
@@ -83,99 +83,99 @@ class HealthMetrics:
         }
 
 
-class HealthMonitor:
+class SystemHealthTracker:
     """
-    Automated health monitoring and maintenance system
+    Automated system health tracking and maintenance system
     
     Monitors robot health in real-time, logs historical data, and triggers
     automated responses to detected issues.
     """
     
-    def __init__(self, config: ConfigManager = None):
-        """Initialize health monitor"""
-        self.logger = logging.getLogger(__name__)
-        self.config = config or ConfigManager()
+    def __init__(self, config: ConfigurationHandler = None):
+        """Initialize system health tracker"""
+        self.system_logger = logging.getLogger(__name__)
+        self.system_config = config or ConfigurationHandler()
         
-        self.check_interval = self.config.get('health_monitor.check_interval', 5.0)
-        self.battery_low = self.config.get('health_monitor.battery_low_threshold', 20.0)
-        self.battery_critical = self.config.get('health_monitor.battery_critical_threshold', 10.0)
-        self.enable_alerts = self.config.get('health_monitor.enable_alerts', True)
-        self.save_history = self.config.get('health_monitor.save_history', True)
+        self.monitoring_frequency = self.system_config.retrieve('health_monitor.check_interval', 5.0)
+        self.power_warning_threshold = self.system_config.retrieve('health_monitor.battery_low_threshold', 20.0)
+        self.power_critical_threshold = self.system_config.retrieve('health_monitor.battery_critical_threshold', 10.0)
+        self.notifications_enabled = self.system_config.retrieve('health_monitor.enable_alerts', True)
+        self.record_history = self.system_config.retrieve('health_monitor.save_history', True)
         
-        self.history: List[HealthMetrics] = []
-        self.current_metrics = HealthMetrics()
-        self.monitoring = False
-        self.monitor_thread = None
+        self.diagnostic_history: List[SystemDiagnostics] = []
+        self.active_diagnostics = SystemDiagnostics()
+        self.surveillance_active = False
+        self.surveillance_thread = None
         
         # Alert tracking
-        self.alert_cooldown = {}
-        self.alert_cooldown_period = 300  # 5 minutes
+        self.notification_cooldown = {}
+        self.cooldown_duration = 300  # 5 minutes
         
-    def start_monitoring(self):
-        """Start continuous health monitoring"""
-        if self.monitoring:
-            self.logger.warning("Monitoring already running")
+    def initiate_surveillance(self):
+        """Start continuous system surveillance"""
+        if self.surveillance_active:
+            self.system_logger.warning("Surveillance already running")
             return
         
-        self.logger.info("🏥 Starting health monitoring...")
-        self.monitoring = True
-        self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
-        self.monitor_thread.start()
-        self.logger.info("✅ Health monitoring started")
+        self.system_logger.info("🏥 Starting system surveillance...")
+        self.surveillance_active = True
+        self.surveillance_thread = threading.Thread(target=self._surveillance_cycle, daemon=True)
+        self.surveillance_thread.start()
+        self.system_logger.info("✅ System surveillance started")
     
-    def stop_monitoring(self):
-        """Stop health monitoring"""
-        self.logger.info("Stopping health monitoring...")
-        self.monitoring = False
-        if self.monitor_thread:
-            self.monitor_thread.join(timeout=5)
-        self.logger.info("✅ Health monitoring stopped")
+    def terminate_surveillance(self):
+        """Stop system surveillance"""
+        self.system_logger.info("Stopping system surveillance...")
+        self.surveillance_active = False
+        if self.surveillance_thread:
+            self.surveillance_thread.join(timeout=5)
+        self.system_logger.info("✅ System surveillance stopped")
     
-    def _monitor_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring:
+    def _surveillance_cycle(self):
+        """Main surveillance cycle"""
+        while self.surveillance_active:
             try:
-                self.check_health()
-                time.sleep(self.check_interval)
+                self.perform_diagnostic_check()
+                time.sleep(self.monitoring_frequency)
             except Exception as e:
-                self.logger.error(f"Error in monitoring loop: {e}")
-                time.sleep(self.check_interval)
+                self.system_logger.error(f"Error in surveillance cycle: {e}")
+                time.sleep(self.monitoring_frequency)
     
-    def check_health(self) -> HealthMetrics:
-        """Perform comprehensive health check"""
-        metrics = HealthMetrics()
+    def perform_diagnostic_check(self) -> SystemDiagnostics:
+        """Perform comprehensive diagnostic check"""
+        diagnostics = SystemDiagnostics()
         
         # Check battery
-        self._check_battery(metrics)
+        self._assess_power_source(diagnostics)
         
         # Check sensors
-        self._check_sensors(metrics)
+        self._evaluate_sensor_array(diagnostics)
         
         # Check motors
-        self._check_motors(metrics)
+        self._inspect_motor_systems(diagnostics)
         
         # Check system resources
-        self._check_system_resources(metrics)
+        self._analyze_system_resources(diagnostics)
         
         # Process alerts
-        self._process_alerts(metrics)
+        self._manage_notifications(diagnostics)
         
         # Save to history
-        self.current_metrics = metrics
-        if self.save_history:
-            self.history.append(metrics)
+        self.active_diagnostics = diagnostics
+        if self.record_history:
+            self.diagnostic_history.append(diagnostics)
             
             # Keep only last 1000 records
-            if len(self.history) > 1000:
-                self.history = self.history[-1000:]
+            if len(self.diagnostic_history) > 1000:
+                self.diagnostic_history = self.diagnostic_history[-1000:]
         
-        return metrics
+        return diagnostics
     
-    def _check_battery(self, metrics: HealthMetrics):
-        """Check battery status"""
+    def _assess_power_source(self, diagnostics: SystemDiagnostics):
+        """Check power source status"""
         try:
             # Try to get battery info from ROS topic
-            returncode, stdout, _ = run_command(
+            returncode, stdout, _ = execute_system_call(
                 "timeout 2 ros2 topic echo /battery_state --once 2>/dev/null || echo ''",
                 timeout=3
             )
@@ -186,11 +186,11 @@ class HealthMonitor:
                     try:
                         for line in stdout.split('\n'):
                             if 'percentage:' in line:
-                                metrics.battery_level = float(line.split(':')[1].strip())
+                                diagnostics.battery_level = float(line.split(':')[1].strip())
                             elif 'voltage:' in line:
-                                metrics.battery_voltage = float(line.split(':')[1].strip())
+                                diagnostics.battery_voltage = float(line.split(':')[1].strip())
                             elif 'current:' in line:
-                                metrics.battery_current = float(line.split(':')[1].strip())
+                                diagnostics.battery_current = float(line.split(':')[1].strip())
                     except:
                         pass
             else:
@@ -199,31 +199,31 @@ class HealthMonitor:
                     self._simulated_battery -= 0.1
                 else:
                     self._simulated_battery = 95.0
-                metrics.battery_level = max(0, self._simulated_battery)
-                metrics.battery_voltage = 11.1 + (metrics.battery_level / 100.0) * 1.5
+                diagnostics.battery_level = max(0, self._simulated_battery)
+                diagnostics.battery_voltage = 11.1 + (diagnostics.battery_level / 100.0) * 1.5
             
             # Determine battery status
-            if metrics.battery_level > self.battery_low:
-                metrics.battery_status = "Good"
-            elif metrics.battery_level > self.battery_critical:
-                metrics.battery_status = "Low"
-                metrics.alerts.append({
+            if diagnostics.battery_level > self.power_warning_threshold:
+                diagnostics.battery_status = "Good"
+            elif diagnostics.battery_level > self.power_critical_threshold:
+                diagnostics.battery_status = "Low"
+                diagnostics.alerts.append({
                     'level': 'warning',
-                    'message': f'Battery low: {metrics.battery_level:.1f}%'
+                    'message': f'Battery low: {diagnostics.battery_level:.1f}%'
                 })
             else:
-                metrics.battery_status = "Critical"
-                metrics.alerts.append({
+                diagnostics.battery_status = "Critical"
+                diagnostics.alerts.append({
                     'level': 'critical',
-                    'message': f'Battery critical: {metrics.battery_level:.1f}%'
+                    'message': f'Battery critical: {diagnostics.battery_level:.1f}%'
                 })
                 
         except Exception as e:
-            self.logger.debug(f"Battery check error: {e}")
-            metrics.battery_status = "Unknown"
+            self.system_logger.debug(f"Power source check error: {e}")
+            diagnostics.battery_status = "Unknown"
     
-    def _check_sensors(self, metrics: HealthMetrics):
-        """Check sensor health"""
+    def _evaluate_sensor_array(self, diagnostics: SystemDiagnostics):
+        """Check sensor array health"""
         sensors_to_check = {
             'lidar': '/scan',
             'imu': '/imu',
@@ -234,36 +234,36 @@ class HealthMonitor:
         for sensor_name, topic in sensors_to_check.items():
             try:
                 # Check if topic is publishing
-                returncode, stdout, _ = run_command(
+                returncode, stdout, _ = execute_system_call(
                     f"timeout 2 ros2 topic hz {topic} 2>/dev/null || echo 'no data'",
                     timeout=3
                 )
                 
                 if returncode == 0 and 'average rate' in stdout:
-                    metrics.sensors[sensor_name]['status'] = 'active'
+                    diagnostics.sensors[sensor_name]['status'] = 'active'
                     # Extract data rate
                     try:
                         rate_line = [l for l in stdout.split('\n') if 'average rate' in l][0]
                         rate = float(rate_line.split(':')[1].strip().split()[0])
-                        metrics.sensors[sensor_name]['data_rate'] = rate
+                        diagnostics.sensors[sensor_name]['data_rate'] = rate
                     except:
-                        metrics.sensors[sensor_name]['data_rate'] = 0
+                        diagnostics.sensors[sensor_name]['data_rate'] = 0
                 else:
-                    metrics.sensors[sensor_name]['status'] = 'inactive'
-                    metrics.alerts.append({
+                    diagnostics.sensors[sensor_name]['status'] = 'inactive'
+                    diagnostics.alerts.append({
                         'level': 'warning',
                         'message': f'Sensor {sensor_name} not publishing'
                     })
                     
             except Exception as e:
-                self.logger.debug(f"Sensor check error for {sensor_name}: {e}")
-                metrics.sensors[sensor_name]['status'] = 'unknown'
+                self.system_logger.debug(f"Sensor check error for {sensor_name}: {e}")
+                diagnostics.sensors[sensor_name]['status'] = 'unknown'
     
-    def _check_motors(self, metrics: HealthMetrics):
-        """Check motor health"""
+    def _inspect_motor_systems(self, diagnostics: SystemDiagnostics):
+        """Check motor systems health"""
         try:
             # Try to get motor diagnostics
-            returncode, stdout, _ = run_command(
+            returncode, stdout, _ = execute_system_call(
                 "timeout 2 ros2 topic echo /diagnostics --once 2>/dev/null || echo ''",
                 timeout=3
             )
@@ -276,113 +276,113 @@ class HealthMonitor:
             # Simulate motor data for testing
             import random
             for motor in ['left', 'right']:
-                metrics.motors[motor]['temperature'] = 25 + random.uniform(-2, 10)
-                metrics.motors[motor]['current'] = random.uniform(0.1, 1.5)
-                metrics.motors[motor]['rpm'] = random.randint(0, 100)
+                diagnostics.motors[motor]['temperature'] = 25 + random.uniform(-2, 10)
+                diagnostics.motors[motor]['current'] = random.uniform(0.1, 1.5)
+                diagnostics.motors[motor]['rpm'] = random.randint(0, 100)
                 
                 # Check for overheating
-                if metrics.motors[motor]['temperature'] > 70:
-                    metrics.alerts.append({
+                if diagnostics.motors[motor]['temperature'] > 70:
+                    diagnostics.alerts.append({
                         'level': 'critical',
-                        'message': f'Motor {motor} overheating: {metrics.motors[motor]["temperature"]:.1f}°C'
+                        'message': f'Motor {motor} overheating: {diagnostics.motors[motor]["temperature"]:.1f}°C'
                     })
                     
         except Exception as e:
-            self.logger.debug(f"Motor check error: {e}")
+            self.system_logger.debug(f"Motor check error: {e}")
     
-    def _check_system_resources(self, metrics: HealthMetrics):
+    def _analyze_system_resources(self, diagnostics: SystemDiagnostics):
         """Check system resource usage"""
         try:
             import psutil
             
-            metrics.system['cpu_usage'] = psutil.cpu_percent(interval=0.1)
-            metrics.system['memory_usage'] = psutil.virtual_memory().percent
-            metrics.system['disk_usage'] = psutil.disk_usage('/').percent
+            diagnostics.system['cpu_usage'] = psutil.cpu_percent(interval=0.1)
+            diagnostics.system['memory_usage'] = psutil.virtual_memory().percent
+            diagnostics.system['disk_usage'] = psutil.disk_usage('/').percent
             
             net_io = psutil.net_io_counters()
-            metrics.system['network_tx'] = net_io.bytes_sent
-            metrics.system['network_rx'] = net_io.bytes_recv
+            diagnostics.system['network_tx'] = net_io.bytes_sent
+            diagnostics.system['network_rx'] = net_io.bytes_recv
             
             # Alert on high resource usage
-            if metrics.system['cpu_usage'] > 90:
-                metrics.alerts.append({
+            if diagnostics.system['cpu_usage'] > 90:
+                diagnostics.alerts.append({
                     'level': 'warning',
-                    'message': f'High CPU usage: {metrics.system["cpu_usage"]:.1f}%'
+                    'message': f'High CPU usage: {diagnostics.system["cpu_usage"]:.1f}%'
                 })
             
-            if metrics.system['memory_usage'] > 90:
-                metrics.alerts.append({
+            if diagnostics.system['memory_usage'] > 90:
+                diagnostics.alerts.append({
                     'level': 'warning',
-                    'message': f'High memory usage: {metrics.system["memory_usage"]:.1f}%'
+                    'message': f'High memory usage: {diagnostics.system["memory_usage"]:.1f}%'
                 })
                 
         except Exception as e:
-            self.logger.debug(f"System resource check error: {e}")
+            self.system_logger.debug(f"System resource check error: {e}")
     
-    def _process_alerts(self, metrics: HealthMetrics):
-        """Process and handle alerts"""
-        if not self.enable_alerts or not metrics.alerts:
+    def _manage_notifications(self, diagnostics: SystemDiagnostics):
+        """Process and handle notifications"""
+        if not self.notifications_enabled or not diagnostics.alerts:
             return
         
-        for alert in metrics.alerts:
+        for alert in diagnostics.alerts:
             alert_key = f"{alert['level']}:{alert['message']}"
             
             # Check cooldown
-            if alert_key in self.alert_cooldown:
-                last_alert = self.alert_cooldown[alert_key]
-                if (datetime.now() - last_alert).seconds < self.alert_cooldown_period:
+            if alert_key in self.notification_cooldown:
+                last_alert = self.notification_cooldown[alert_key]
+                if (datetime.now() - last_alert).seconds < self.cooldown_duration:
                     continue
             
             # Log alert
             if alert['level'] == 'critical':
-                self.logger.error(f"🚨 {alert['message']}")
+                self.system_logger.error(f"🚨 {alert['message']}")
             elif alert['level'] == 'warning':
-                self.logger.warning(f"⚠️  {alert['message']}")
+                self.system_logger.warning(f"⚠️  {alert['message']}")
             
             # Update cooldown
-            self.alert_cooldown[alert_key] = datetime.now()
+            self.notification_cooldown[alert_key] = datetime.now()
             
             # Trigger automated response
-            self._handle_alert(alert)
+            self._respond_to_alert(alert)
     
-    def _handle_alert(self, alert: Dict):
+    def _respond_to_alert(self, alert: Dict):
         """Handle alert with automated response"""
         message = alert['message'].lower()
         
         # Battery critical - initiate safe shutdown sequence
         if 'battery critical' in message:
-            self.logger.critical("Initiating battery protection mode...")
+            self.system_logger.critical("Initiating battery protection mode...")
             # In real implementation: stop motors, save state, return to dock
             
         # Motor overheating - reduce speed
         elif 'overheating' in message:
-            self.logger.warning("Reducing motor speed due to overheating...")
+            self.system_logger.warning("Reducing motor speed due to overheating...")
             # In real implementation: publish speed reduction command
             
         # Sensor failure - switch to backup sensors or safe mode
         elif 'sensor' in message and 'not publishing' in message:
-            self.logger.warning("Sensor failure detected, entering safe mode...")
+            self.system_logger.warning("Sensor failure detected, entering safe mode...")
             # In real implementation: use redundant sensors or stop navigation
     
-    def generate_health_report(self) -> str:
-        """Generate comprehensive health report"""
+    def create_diagnostic_summary(self) -> str:
+        """Generate comprehensive diagnostic summary"""
         report_lines = [
             "=" * 70,
-            "🏥 TURTLEBOT3 HEALTH REPORT",
+            "🏥 TURTLEBOT3 DIAGNOSTIC SUMMARY",
             "=" * 70,
-            f"Generated: {format_timestamp()}",
+            f"Generated: {render_datetime_string()}",
             ""
         ]
         
         # Current status
-        metrics = self.current_metrics
+        diagnostics = self.active_diagnostics
         
         report_lines.extend([
             "📊 CURRENT STATUS",
             "-" * 70,
-            f"Battery: {metrics.battery_level:.1f}% ({metrics.battery_status})",
-            f"Voltage: {metrics.battery_voltage:.2f}V",
-            f"Current: {metrics.battery_current:.2f}A",
+            f"Battery: {diagnostics.battery_level:.1f}% ({diagnostics.battery_status})",
+            f"Voltage: {diagnostics.battery_voltage:.2f}V",
+            f"Current: {diagnostics.battery_current:.2f}A",
             ""
         ])
         
@@ -391,7 +391,7 @@ class HealthMonitor:
             "🔍 SENSORS",
             "-" * 70
         ])
-        for sensor_name, sensor_data in metrics.sensors.items():
+        for sensor_name, sensor_data in diagnostics.sensors.items():
             status_icon = "✅" if sensor_data['status'] == 'active' else "❌"
             rate = f"{sensor_data['data_rate']:.1f} Hz" if sensor_data['data_rate'] > 0 else "N/A"
             report_lines.append(f"{status_icon} {sensor_name.upper()}: {sensor_data['status']} ({rate})")
@@ -402,7 +402,7 @@ class HealthMonitor:
             "⚙️  MOTORS",
             "-" * 70
         ])
-        for motor_name, motor_data in metrics.motors.items():
+        for motor_name, motor_data in diagnostics.motors.items():
             report_lines.append(
                 f"{motor_name.upper()}: {motor_data['temperature']:.1f}°C, "
                 f"{motor_data['current']:.2f}A, {motor_data['rpm']} RPM"
@@ -413,31 +413,31 @@ class HealthMonitor:
         report_lines.extend([
             "💻 SYSTEM RESOURCES",
             "-" * 70,
-            f"CPU Usage: {metrics.system['cpu_usage']:.1f}%",
-            f"Memory Usage: {metrics.system['memory_usage']:.1f}%",
-            f"Disk Usage: {metrics.system['disk_usage']:.1f}%",
+            f"CPU Usage: {diagnostics.system['cpu_usage']:.1f}%",
+            f"Memory Usage: {diagnostics.system['memory_usage']:.1f}%",
+            f"Disk Usage: {diagnostics.system['disk_usage']:.1f}%",
             ""
         ])
         
         # Active alerts
-        if metrics.alerts:
+        if diagnostics.alerts:
             report_lines.extend([
                 "⚠️  ACTIVE ALERTS",
                 "-" * 70
             ])
-            for alert in metrics.alerts:
+            for alert in diagnostics.alerts:
                 icon = "🚨" if alert['level'] == 'critical' else "⚠️ "
                 report_lines.append(f"{icon} [{alert['level'].upper()}] {alert['message']}")
             report_lines.append("")
         
         # Historical trends
-        if len(self.history) > 1:
+        if len(self.diagnostic_history) > 1:
             report_lines.extend([
                 "📈 TRENDS (Last hour)",
                 "-" * 70
             ])
             
-            recent = [m for m in self.history if (datetime.now() - m.timestamp) < timedelta(hours=1)]
+            recent = [m for m in self.diagnostic_history if (datetime.now() - m.timestamp) < timedelta(hours=1)]
             if recent:
                 avg_battery = sum(m.battery_level for m in recent) / len(recent)
                 avg_cpu = sum(m.system['cpu_usage'] for m in recent) / len(recent)
@@ -454,66 +454,66 @@ class HealthMonitor:
         
         return '\n'.join(report_lines)
     
-    def save_report(self, filepath: Optional[Path] = None):
-        """Save health report to file"""
+    def export_diagnostic_data(self, filepath: Optional[Path] = None):
+        """Save diagnostic data to file"""
         if filepath is None:
-            filepath = Path('logs') / f"health_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+            filepath = Path('logs') / f"diagnostic_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
         
         filepath.parent.mkdir(parents=True, exist_ok=True)
         
-        report = self.generate_health_report()
+        summary = self.create_diagnostic_summary()
         with open(filepath, 'w') as f:
-            f.write(report)
+            f.write(summary)
         
-        self.logger.info(f"Health report saved to {filepath}")
+        self.system_logger.info(f"Diagnostic summary saved to {filepath}")
         
         # Also save JSON data
         json_path = filepath.with_suffix('.json')
         with open(json_path, 'w') as f:
-            json.dump(self.current_metrics.to_dict(), f, indent=2)
+            json.dump(self.active_diagnostics.to_dict(), f, indent=2)
         
-        self.logger.info(f"Health data saved to {json_path}")
+        self.system_logger.info(f"Diagnostic data saved to {json_path}")
     
-    def run_diagnostics(self) -> Dict:
+    def execute_comprehensive_scan(self) -> Dict:
         """Run comprehensive diagnostics and return results"""
-        self.logger.info("🔧 Running comprehensive diagnostics...")
+        self.system_logger.info("🔧 Running comprehensive diagnostics...")
         
-        metrics = self.check_health()
-        report = self.generate_health_report()
+        diagnostics = self.perform_diagnostic_check()
+        summary = self.create_diagnostic_summary()
         
-        print(report)
+        print(summary)
         
         return {
-            'metrics': metrics.to_dict(),
-            'report': report,
-            'health_score': self._calculate_health_score(metrics)
+            'diagnostics': diagnostics.to_dict(),
+            'summary': summary,
+            'health_score': self._compute_overall_score(diagnostics)
         }
     
-    def _calculate_health_score(self, metrics: HealthMetrics) -> float:
+    def _compute_overall_score(self, diagnostics: SystemDiagnostics) -> float:
         """Calculate overall health score (0-100)"""
         score = 100.0
         
         # Battery impact
-        if metrics.battery_level < self.battery_critical:
+        if diagnostics.battery_level < self.power_critical_threshold:
             score -= 30
-        elif metrics.battery_level < self.battery_low:
+        elif diagnostics.battery_level < self.power_warning_threshold:
             score -= 15
         
         # Sensor impact
-        inactive_sensors = sum(1 for s in metrics.sensors.values() if s['status'] != 'active')
+        inactive_sensors = sum(1 for s in diagnostics.sensors.values() if s['status'] != 'active')
         score -= inactive_sensors * 10
         
         # Motor impact (overheating)
-        for motor in metrics.motors.values():
+        for motor in diagnostics.motors.values():
             if motor['temperature'] > 70:
                 score -= 20
             elif motor['temperature'] > 60:
                 score -= 10
         
         # System resource impact
-        if metrics.system['cpu_usage'] > 90:
+        if diagnostics.system['cpu_usage'] > 90:
             score -= 10
-        if metrics.system['memory_usage'] > 90:
+        if diagnostics.system['memory_usage'] > 90:
             score -= 10
         
         return max(0, score)
@@ -521,16 +521,16 @@ class HealthMonitor:
 
 def main():
     """Main entry point for standalone execution"""
-    from core.logger import setup_logger
+    from core.logger import initialize_event_recorder
     
-    logger = setup_logger('health_monitor', Path('logs'))
-    monitor = HealthMonitor()
+    logger = initialize_event_recorder('system_health_tracker', Path('logs'))
+    tracker = SystemHealthTracker()
     
     # Run diagnostics
-    results = monitor.run_diagnostics()
+    results = tracker.execute_comprehensive_scan()
     
-    # Save report
-    monitor.save_report()
+    # Save summary
+    tracker.export_diagnostic_data()
     
     print(f"\n📊 Overall Health Score: {results['health_score']:.1f}/100")
 

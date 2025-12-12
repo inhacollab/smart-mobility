@@ -8,16 +8,16 @@ Course: Smart Mobility - INHA University
 Date: December 2025
 """
 
-from .setup_manager import SetupManager
-from .health_monitor import HealthMonitor
-from .smart_navigator import SmartNavigator
-from .vision_processor import VisionProcessor
-from .gesture_controller import GestureController
+from .setup_manager import InstallationOrchestrator
+from .health_monitor import SystemHealthTracker
+from .smart_navigator import AutonomousPathfinder
+from .vision_processor import ObjectRecognitionEngine
+from .gesture_controller import HandMotionInterpreter
 
 __all__ = [
-    'SetupManager',
-    'HealthMonitor',
-    'SmartNavigator',
-    'VisionProcessor',
-    'GestureController'
+    'InstallationOrchestrator',
+    'SystemHealthTracker',
+    'AutonomousPathfinder',
+    'ObjectRecognitionEngine',
+    'HandMotionInterpreter'
 ]

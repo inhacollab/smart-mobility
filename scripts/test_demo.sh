@@ -18,7 +18,7 @@ echo ""
 # Test 2: Module Verification
 echo "▶ Test 2: Module Verification"
 echo "──────────────────────────────────────────────────────────────────"
-python3 verify.py
+python3 scripts/verify.py
 echo ""
 
 # Test 3: Code Statistics
@@ -74,7 +74,7 @@ echo "Quick commands for video:"
 echo "  1. python3 main.py --check-env"
 echo "  2. python3 main.py health"
 echo "  3. python3 main.py --help"
-echo "  4. python3 verify.py"
+echo "  4. python3 scripts/verify.py"
 echo ""
 echo "See DEMO_SCRIPT.md for full recording guide"
 echo "════════════════════════════════════════════════════════════════════"
