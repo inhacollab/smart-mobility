@@ -3,9 +3,7 @@ TurtleBot3 Smart Automation System - Automation Package
 ========================================================
 Contains all automation modules for setup, maintenance, navigation, vision, and gestures
 
-Author: Sarvar Akimov
-Course: Operating Systems - Inha University
-Date: December 2025
+Course: Smart Mobility
 """
 
 from .setup_manager import SetupManager

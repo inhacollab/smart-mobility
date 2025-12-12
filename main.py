@@ -69,9 +69,8 @@ class TurtleBot3SmartAutomation:
         self.logger.info("=" * 80)
         self.logger.info("🤖 TURTLEBOT3 SMART AUTOMATION SYSTEM")
         self.logger.info("=" * 80)
-        self.logger.info(f"Author: Sarvar Akimov")
-        self.logger.info(f"Course: Operating Systems - Inha University")
-        self.logger.info(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.logger.info(f"Course: Smart Mobility")
+        self.logger.info(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         self.logger.info("=" * 80)
         
         # Load configuration

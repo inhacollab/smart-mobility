@@ -16,9 +16,7 @@ Features:
 - Return-to-base capability
 - Path optimization
 
-Author: Sarvar Akimov
-Course: Operating Systems - Inha University
-Date: December 2025
+Course: Smart Mobility
 """
 
 import sys

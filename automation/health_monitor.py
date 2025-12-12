@@ -15,9 +15,7 @@ Features:
 - Automated fault detection and recovery
 - Health report generation
 
-Author: Sarvar Akimov
-Course: Operating Systems - Inha University
-Date: December 2025
+Course: Smart Mobility
 """
 
 import sys

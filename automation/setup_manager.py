@@ -15,9 +15,7 @@ Features:
 - Dependency verification and health checks
 - Rollback support on installation failure
 
-Author: Sarvar Akimov
-Course: Operating Systems - Inha University  
-Date: December 2025
+Course: Smart Mobility
 """
 
 import os
